@@ -131,3 +131,70 @@ Date:   Sun Jan 13 16:57:41 2019 +0900
 
     Initial commit
 ```
+## git pushが失敗した時
+``` bash
+hamaguchi@hamaguchi-ThinkPad-T540p:~/Github/howto/env/howtoLinux$ git add githubで文書管理.md 
+hamaguchi@hamaguchi-ThinkPad-T540p:~/Github/howto/env/howtoLinux$ git commit -m "github使用法のファイルを追加"
+[master ebd76ad] github使用法のファイルを追加
+ 1 file changed, 133 insertions(+)
+ create mode 100644 "github\343\201\247\346\226\207\346\233\270\347\256\241\347\220\206.md"
+hamaguchi@hamaguchi-ThinkPad-T540p:~/Github/howto/env/howtoLinux$ git push origin master
+Username for 'https://github.com': hamakan2
+Password for 'https://hamakan2@github.com': 
+To https://github.com/hamakan2/howtoLinux.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/hamakan2/howtoLinux.git'
+ヒント: Updates were rejected because the remote contains work that you do
+ヒント: not have locally. This is usually caused by another repository pushing
+ヒント: to the same ref. You may want to first integrate the remote changes
+ヒント: (e.g., 'git pull ...') before pushing again.
+ヒント: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+
+## 解決方法
+### プルして最新の変更履歴をマージしてから、またプッシュし直せばOKです。
+``` bash
+hamaguchi@hamaguchi-ThinkPad-T540p:~/Github/howto/env/howtoLinux$ git pull origin master
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/hamakan2/howtoLinux
+ * branch            master     -> FETCH_HEAD
+   5fd09be..134f9a8  master     -> origin/master
+Merge made by the 'recursive' strategy.
+ ubntu18ToT540.md | 135 +++++++++----------------------------------------------
+ 1 file changed, 22 insertions(+), 113 deletions(-)
+```
+### マージで競合したのでコミットし直します。(たぶんVimが立ち上がります。:qでvimからぬける)
+``` bash
+hamaguchi@hamaguchi-ThinkPad-T540p:~/Github/howto/env/howtoLinux$ git commit -m "競合解決"
+ブランチ master
+このブランチは 'origin/master' よりも2コミット進んでいます。
+  (use "git push" to publish your local commits)
+
+追跡されていないファイル:
+	01linux.md
+	howtoLinux/
+```
+### あとは今まで通りプッシュするだけです。
+``` bash
+hamaguchi@hamaguchi-ThinkPad-T540p:~/Github/howto/env/howtoLinux$ git push
+Username for 'https://github.com': hamakan2
+Password for 'https://hamakan2@github.com': 
+Counting objects: 5, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 2.18 KiB | 2.18 MiB/s, done.
+Total 5 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), done.
+To https://github.com/hamakan2/howtoLinux.git
+   134f9a8..6429d8c  master -> master
+
+追跡されていないファイル:
+	01linux.md
+	howtoLinux/
+
+これでエラーなく無事プッシュできました。
+
