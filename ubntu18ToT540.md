@@ -57,4 +57,4 @@ LaTeX
 R,Rstudio,VSC,Chrome,EclipseIDE（JAVA,C++）,
 
 ### man の日本語化
-hiroshi@hamaguchi-ThinkPad-T540p:~$ sudo apt install manpages-ja
+xxxxx@xxxxx-ThinkPad-T540p:~$ sudo apt install manpages-ja
